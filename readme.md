@@ -305,56 +305,7 @@ curl --request POST \
   --data '{}' | jq
 ```
 
-## 11. Set Login V2 Feature Values On Both Instances
-
-Existing or newly initialized instances can have instance-level feature values
-stored in ZITADEL. Set both instances to use the shared Login V2 frontend with a
-relative base URI:
-
-This should not be needed, the default is already set this way.
-
-```sh
-curl --request PUT \
-  --url http://localhost:8080/v2/features/instance \
-  --header "Authorization: Bearer $ZITADEL_TOKEN" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "loginV2": {
-      "required": true,
-      "baseUri": "/ui/v2/login/"
-    }
-  }' | jq
-
-curl --request PUT \
-  --url http://auth2.local:8080/v2/features/instance \
-  --header "Authorization: Bearer $ZITADEL_TOKEN" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "loginV2": {
-      "required": true,
-      "baseUri": "/ui/v2/login/"
-    }
-  }' | jq
-```
-
-Verify:
-
-```sh
-curl --request GET \
-  --url http://auth2.local:8080/v2/features/instance \
-  --header "Authorization: Bearer $ZITADEL_TOKEN" | jq
-```
-
-The response should contain:
-
-```json
-"loginV2": {
-  "required": true,
-  "baseUri": "/ui/v2/login/"
-}
-```
-
-## 12. Test The Login Redirect
+## 11. Test The Login Redirect
 
 Open:
 
